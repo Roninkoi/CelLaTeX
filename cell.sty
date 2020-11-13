@@ -1,0 +1,112 @@
+\ProvidesPackage{cell}[13.11.2020 v1.0 R. Koitermaa]
+\RequirePackage{tikz}
+
+\usetikzlibrary{shapes.geometric, calc}
+
+\newcommand{\cellauto}[1]{
+  \def\randseed{#1}
+  \def\rownum{100}
+  \def\colnum{32}
+  \pgfmathparse{int(\colnum-1)}\let\colnumi=\pgfmathresult
+  \pgfmathparse{int(\colnum-2)}\let\colnumj=\pgfmathresult
+  \def\sqsize{0.05cm}
+
+  \def\setcell##1##2##3{
+    \pgfmathparse{int(##2)}\let\xx=\pgfmathresult
+    \pgfmathparse{int(##3)}\let\yy=\pgfmathresult
+    \expandafter\xdef\csname cell-##1-\xx-\yy\endcsname
+  }
+
+  \def\getcell##1##2##3##4{
+    \pgfmathparse{int(##2)}\let\xx=\pgfmathresult
+    \pgfmathparse{int(##3)}\let\yy=\pgfmathresult
+    \def\marshal{\xdef##4}
+    \marshal{\csname cell-##1-\xx-\yy\endcsname}
+  }
+
+  \def\cells{}
+
+  % set to zero
+  \foreach \y in {0,...,\rownum}{
+    \foreach \x in {0,...,\colnumi}{
+      \setcell{\cells}{\x}{\y}{1}
+    }
+  }
+
+  % set random start
+  \foreach \x in {1,...,\colnumj}{
+    \pgfmathparse{isodd(Mod(rand, int(\x*127.763)))}\ifnum\pgfmathresult=1\def\cc{1}\else\def\cc{0}\fi
+    \setcell{\cells}{\x}{0}{\cc}
+  }
+
+  % generate
+  \foreach \y in {1,...,\rownum}{
+    \foreach \x in {1,...,\colnumj}{
+      \getcell{\cells}{\x-1}{\y-1}{\l} % left cell
+      \getcell{\cells}{\x}{\y-1}{\c} % center cell
+      \getcell{\cells}{\x+1}{\y-1}{\r} % right cell
+
+      % check cell states
+      \pgfmathparse{int(\l)}\ifnum\pgfmathresult=1\def\lone{1}\else\def\lone{0}\fi
+      \pgfmathparse{int(\c)}\ifnum\pgfmathresult=1\def\cone{1}\else\def\cone{0}\fi
+      \pgfmathparse{int(\r)}\ifnum\pgfmathresult=1\def\rone{1}\else\def\rone{0}\fi
+
+      \if \lone 1
+      \if \cone 1
+      
+      \if \rone 1 % 111
+      \setcell{\cells}{\x}{\y}{0}
+      \else % 110
+      \setcell{\cells}{\x}{\y}{1}
+      \fi
+
+      \else
+      
+      \if \rone 1 % 101
+      \setcell{\cells}{\x}{\y}{1}
+      \else % 100
+      \setcell{\cells}{\x}{\y}{0}
+      \fi
+
+      \fi
+      \else
+
+      \if \cone 1
+      
+      \if \rone 1 % 011
+      \setcell{\cells}{\x}{\y}{1}
+      \else % 010
+      \setcell{\cells}{\x}{\y}{1}
+      \fi
+
+      \else
+      
+      \if \rone 1 % 001
+      \setcell{\cells}{\x}{\y}{1}
+      \else % 000
+      \setcell{\cells}{\x}{\y}{0}
+      \fi
+
+      \fi
+      
+      \fi
+    }
+  }
+
+  \def\bgscale{6}
+
+  \begin{center}
+    \begin{tikzpicture}[overlay,scale=\bgscale]
+      \pgftransformcm{1}{0.0}{0.0}{1}{\pgfpoint{-\sqsize*\colnum/2}{-\sqsize*\rownum+2cm/\bgscale}}
+
+      \foreach \y in {0,1,...,\rownum} {
+        \foreach \x in {0,1,...,\colnumi} {
+          \getcell{\cells}{\x}{\y}{\c}
+          \pgfmathparse{isodd(\c)}\ifnum\pgfmathresult=1\def\currcol{black!7}\else\def\currcol{black!4}\fi
+          \filldraw[\currcol] (\x*\sqsize,\y*\sqsize) rectangle (\x*\sqsize+\sqsize, \y*\sqsize+\sqsize);
+        }
+      }
+    \end{tikzpicture}
+  \end{center}
+}
+

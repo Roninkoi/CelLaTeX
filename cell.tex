@@ -1,0 +1,49 @@
+\documentclass[10pt]{article}
+
+\usepackage[dvips]{graphicx}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{environ}
+\usepackage{varwidth}
+\usepackage{lcg}
+
+\usepackage{cell} % cellular automaton
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, calc}
+
+\usepackage[top=2cm, bottom=2cm, left=1cm, right=1cm, headheight=0cm, tmargin=2cm, bmargin=2cm]{geometry}
+\pagestyle{plain}
+
+\pagenumbering{gobble}
+
+\begin{document}
+
+\setlength{\belowcaptionskip}{0pt}
+
+\selectlanguage{english}
+
+\normalsize
+
+\newcommand{\random}{\rand\arabic{rand}}
+
+\def\randseed{\random}
+
+\cellauto{\random} % generate cellular automaton using seed
+
+\vspace{\fill}
+\begin{center}
+  \noindent \textcolor{Gray}{\footnotesize Rule 110 generated from random number \randseed.}
+\end{center}
+
+\end{document}
+
+%%% Local Variables:
+%%% TeX-command-extra-options: "-shell-escape"
+%%% coding: utf-8-unix
+%%% TeX-engine: luatex
+%%% End:
