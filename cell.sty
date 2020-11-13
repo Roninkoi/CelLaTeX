@@ -97,7 +97,8 @@
 
   \begin{center}
     \begin{tikzpicture}[overlay,scale=\bgscale]
-      \pgftransformcm{1}{0.0}{0.0}{1}{\pgfpoint{-\sqsize*\colnum/2}{-\sqsize*\rownum+2cm/\bgscale}}
+      % \pgftransformcm{1}{0.0}{0.0}{1}{\pgfpoint{-\sqsize*\colnum/2}{-\sqsize*\rownum+2cm/\bgscale}}
+      \pgftransformcm{1}{0.0}{0.0}{-1}{\pgfpoint{-\sqsize*\colnum/2}{2.5cm/\bgscale}}
 
       \foreach \y in {0,1,...,\rownum} {
         \foreach \x in {0,1,...,\colnumi} {
