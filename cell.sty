@@ -102,7 +102,7 @@
       \foreach \y in {0,1,...,\rownum} {
         \foreach \x in {0,1,...,\colnumi} {
           \getcell{\cells}{\x}{\y}{\c}
-          \pgfmathparse{isodd(\c)}\ifnum\pgfmathresult=1\def\currcol{black!7}\else\def\currcol{black!4}\fi
+          \pgfmathparse{isodd(\c)}\ifnum\pgfmathresult=1\def\currcol{black!10}\else\def\currcol{black!3}\fi
           \filldraw[\currcol] (\x*\sqsize,\y*\sqsize) rectangle (\x*\sqsize+\sqsize, \y*\sqsize+\sqsize);
         }
       }
