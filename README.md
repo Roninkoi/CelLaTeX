@@ -4,5 +4,5 @@
 
 Calculates multiple generations of a cellular automaton (here [Rule 110](https://en.wikipedia.org/wiki/Rule_110)) for inclusion in LaTeX documents. Uses TikZ for drawing.
 
-Directly inspired by [this answer](https://tex.stackexchange.com/questions/118377/drawing-multiple-iterations-of-cellular-automatons-inline-possibly-with-tikz).
+Directly inspired by [this answer](https://tex.stackexchange.com/a/118432).
 
