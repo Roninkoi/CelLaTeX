@@ -93,7 +93,7 @@
     }
   }
 
-  \def\bgscale{6}
+  \def\bgscale{6.9}
 
   \begin{center}
     \begin{tikzpicture}[overlay,scale=\bgscale]
@@ -103,7 +103,7 @@
       \foreach \y in {0,1,...,\rownum} {
         \foreach \x in {0,1,...,\colnumi} {
           \getcell{\cells}{\x}{\y}{\c}
-          \pgfmathparse{isodd(\c)}\ifnum\pgfmathresult=1\def\currcol{black!10}\else\def\currcol{black!3}\fi
+          \pgfmathparse{isodd(\c)}\ifnum\pgfmathresult=1\def\currcol{black!7}\else\def\currcol{black!3}\fi
           \filldraw[\currcol] (\x*\sqsize,\y*\sqsize) rectangle (\x*\sqsize+\sqsize, \y*\sqsize+\sqsize);
         }
       }
